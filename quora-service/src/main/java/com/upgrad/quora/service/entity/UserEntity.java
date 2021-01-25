@@ -22,7 +22,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
     {
         @NamedQuery(name = "userByUuid", query = "select u from UserEntity u where u.uuid = :uuid"),
         @NamedQuery(name = "userByEmail", query = "select u from UserEntity u where u.email =:email"),
-        @NamedQuery(name = "userByUserName", query = "select u from UserEntity u where u.userName=:userName")
+        @NamedQuery(name = "userByUserName", query = "select u from UserEntity u where u.userName=:userName"),
+        @NamedQuery(name="userByUserId", query = "select u from UserEntity u where u.uuid=:userId")
     }
 )
 
