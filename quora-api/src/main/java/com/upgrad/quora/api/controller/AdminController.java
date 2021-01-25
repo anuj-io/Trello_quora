@@ -2,6 +2,7 @@ package com.upgrad.quora.api.controller;
 
 import com.upgrad.quora.api.model.UserDeleteResponse;
 import com.upgrad.quora.service.business.UserAdminBusinessService;
+import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,21 +22,15 @@ public class AdminController {
 
     /**
      * @param  userUuid the first {@code String} to delete the particular user.
-     * @param  accessToken the second {@code String} to check if the access is available.
+     * @param  authorization the second {@code String} to check if the access is available.
      * @return ResponseEntity is returned with Status OK.
      */
     @RequestMapping(method = RequestMethod.DELETE, path = "/admin/user/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity < UserDeleteResponse > userDelete(@PathVariable("userId") final String userUuid, @RequestHeader("authorization") final String accessToken) throws AuthorizationFailedException, UserNotFoundException {
-        // Logic to handle Bearer <accesstoken>
-        // User can give only Access token or Bearer <accesstoken> as input.
-        String bearerToken = null;
-        try {
-            bearerToken = accessToken.split("Bearer ")[1];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            bearerToken = accessToken;
-        }
-        String uuid = userAdminBusinessService.deleteUser(userUuid, bearerToken);
-        UserDeleteResponse userDeleteResponse = new UserDeleteResponse().id(uuid).status("USER SUCCESSFULLY DELETED");
-        return new ResponseEntity < UserDeleteResponse > (userDeleteResponse, HttpStatus.OK);
+    public ResponseEntity < UserDeleteResponse > userDelete(@PathVariable("userId") final String userUuid, @RequestHeader(value = "authorization", required = false) final String authorization) throws AuthorizationFailedException, UserNotFoundException {
+        UserEntity userEntity = userAdminBusinessService.deleteUser(userUuid, authorization);
+        UserDeleteResponse userDeleteResponse = new UserDeleteResponse();
+        userDeleteResponse.setId(userEntity.getUuid());
+        userDeleteResponse.setStatus("USER SUCCESSFULLY DELETED");
+        return new ResponseEntity <UserDeleteResponse> (userDeleteResponse, HttpStatus.OK);
     }
 }
