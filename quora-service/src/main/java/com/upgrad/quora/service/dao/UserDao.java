@@ -69,4 +69,12 @@ public class UserDao {
   public void updateUserEntity(final UserEntity updatedUserEntity) {
     entityManager.merge(updatedUserEntity);
   }
+
+  /**
+   * Deletes the given user entity
+   * @param userEntity to be deleted
+   */
+  public void deleteUserEntity(final UserEntity userEntity) {
+    entityManager.remove(userEntity);
+  }
 }
