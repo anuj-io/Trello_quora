@@ -52,7 +52,9 @@ public class UserDao {
   }
 
   /**
-   *
+   * Get user by email Id
+   * @param email for the userEntity to be fetched
+   * @return UserEntity
    */
   public UserEntity getUserByEmailId(final String email) {
     try {

@@ -16,11 +16,21 @@ public class QuestionDao {
   @PersistenceContext
   private EntityManager entityManager;
 
+  /**
+   *
+   * @param questionEntity Object which is to be persisted
+   * @return same question entity as passed in params
+   */
   public QuestionEntity createQuestion(QuestionEntity questionEntity) {
     entityManager.persist(questionEntity);
     return questionEntity;
   }
 
+  /**
+   * Get list of questions created by user
+   * @param userUuid for User question created by whom are to be returned
+   * @return List of question entities
+   */
   public List<QuestionEntity> getQuestionsByUserId(String userUuid) {
     try {
       return entityManager.createNamedQuery("questionsByUserId", QuestionEntity.class).setParameter("userUuid", userUuid).getResultList();
@@ -29,6 +39,10 @@ public class QuestionDao {
     }
   }
 
+  /**
+   * Get all the questions in DB
+   * @return List of question entities
+   */
   public List<QuestionEntity> getAllQuestions() {
     try {
       return entityManager.createNamedQuery("questions", QuestionEntity.class).getResultList();
@@ -37,6 +51,11 @@ public class QuestionDao {
     }
   }
 
+  /**
+   * Get Question by its ID
+   * @param questionUuid for question to be fetched
+   * @return Question Entity
+   */
   public QuestionEntity getQuestionById(String questionUuid) {
     try {
       return entityManager.createNamedQuery("questionById", QuestionEntity.class).setParameter("uuid", questionUuid).getSingleResult();
@@ -45,9 +64,17 @@ public class QuestionDao {
     }
   }
 
+  /**
+   * Delete Question by its id
+   * @param questionUuid for question to be deleted
+   */
   public void deleteQuestion(String questionUuid) {
       entityManager.createNamedQuery("deleteQuestionById").setParameter("uuid", questionUuid).executeUpdate();
   }
 
+  /**
+   * Updates the Question
+   * @param questionEntity to be updated
+   */
   public void updateQuestion(QuestionEntity questionEntity) {entityManager.merge(questionEntity);}
 }
