@@ -20,7 +20,14 @@ public class UserAdminBusinessService {
     @Autowired
     private UserAuthDao userAuthDao;
 
-
+    /**
+     * Deletes the user entity after authorization check
+     * @param userUuid for fetching and deleting the entity
+     * @param accessToken for authorization check
+     * @return UserEntity corresponding to userUuid
+     * @throws AuthorizationFailedException
+     * @throws UserNotFoundException
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public UserEntity deleteUser(final String userUuid, final String accessToken) throws
             AuthorizationFailedException, UserNotFoundException

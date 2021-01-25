@@ -16,6 +16,12 @@ public class SignupBusinessService {
   @Autowired
   private PasswordCryptographyProvider cryptographyProvider;
 
+  /**
+   * Create the user in DB
+   * @param userEntity to be created
+   * @return Created userEntity
+   * @throws SignUpRestrictedException
+   */
   @Transactional(propagation = Propagation.REQUIRED)
   public UserEntity signup(UserEntity userEntity) throws SignUpRestrictedException{
     if (userDao.getUserByUserName(userEntity.getUserName()) != null) {
