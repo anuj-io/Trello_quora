@@ -18,6 +18,9 @@ import java.time.ZonedDateTime;
         @NamedQuery(name = "userAccessByToken", query = "select u from UserAuthEntity u where u.accessToken=:accessToken")
 })
 
+/*
+This model class maps to the User Auth table in DB
+ */
 public class UserAuthEntity {
 
     @Id

@@ -20,6 +20,10 @@ import org.hibernate.annotations.OnDeleteAction;
     @NamedQuery(name = "questionById", query = "select q from QuestionEntity q where q.uuid = :uuid"),
     @NamedQuery(name = "deleteQuestionById", query = "delete from QuestionEntity q where q.uuid = :uuid")
 })
+
+/*
+This model class maps to the Question table in DB
+ */
 public class QuestionEntity  implements Serializable {
 
   @Id

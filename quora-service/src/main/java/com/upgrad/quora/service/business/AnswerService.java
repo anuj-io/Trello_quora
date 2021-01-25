@@ -30,6 +30,15 @@ public class AnswerService {
     @Autowired
     private QuestionDao questionDao;
 
+    /**
+     * This method is used to create an answer to a particular question.
+     * @param answerEntity
+     * @param accessToken
+     * @param questionId
+     * @return createAnswer(answerEntity)
+     * @throws AuthorizationFailedException
+     * @throws InvalidQuestionException
+     */
     @Transactional
     public AnswerEntity createAnswer(AnswerEntity answerEntity, final String accessToken, final String questionId) throws AuthorizationFailedException, InvalidQuestionException {
         UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
@@ -49,6 +58,15 @@ public class AnswerService {
         return answerDao.createAnswer(answerEntity);
     }
 
+    /**
+     * This method is used to edit an answer. Only the owner of the answer can edit the answer
+     * @param accessToken
+     * @param answerId
+     * @param newAnswer
+     * @return answerEntity
+     * @throws AnswerNotFoundException
+     * @throws AuthorizationFailedException
+     */
     @Transactional
     public AnswerEntity editAnswer(final String accessToken, final String answerId, final String newAnswer) throws AnswerNotFoundException, AuthorizationFailedException {
         UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
@@ -69,6 +87,15 @@ public class AnswerService {
         return answerEntity;
     }
 
+    /**
+     * This method is used to delete a answer that has been posted by a user. Note, only the owner of the answer or admin can delete
+     * an answer.
+     * @param answerId
+     * @param accessToken
+     * @return deleteAnswer(answerId)
+     * @throws AuthorizationFailedException
+     * @throws AnswerNotFoundException
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public AnswerEntity deleteAnswer(final String answerId, final String accessToken) throws AuthorizationFailedException, AnswerNotFoundException {
 
@@ -90,6 +117,14 @@ public class AnswerService {
         }
     }
 
+    /**
+     * This method return "content" of all the answers posted for that particular question.
+     * @param questionId
+     * @param accessToken
+     * @return getAllAnswersToQuestion(questionId)
+     * @throws AuthorizationFailedException
+     * @throws InvalidQuestionException
+     */
     public List<AnswerEntity> getAllAnswersToQuestion(final String questionId, final String accessToken) throws AuthorizationFailedException, InvalidQuestionException {
         UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
         if (userAuthEntity == null) {

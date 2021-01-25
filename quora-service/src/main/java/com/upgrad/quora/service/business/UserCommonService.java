@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 public class UserCommonService {
 
         @Autowired
-        UserAuthDao userAuthDao;
+        private UserAuthDao userAuthDao;
 
         @Autowired
-        UserDao userDao;
+        private UserDao userDao;
 
-        public void checkIfTokenIsValid(String accessToken) throws AuthorizationFailedException {
+    /**
+     * //This method will validate the access token
+     * @param accessToken
+     * @throws AuthorizationFailedException
+     */
+    public void checkIfTokenIsValid(String accessToken) throws AuthorizationFailedException {
             UserAuthEntity userAuthEntity = userAuthDao.getUserAuthByToken(accessToken);
             if (userAuthEntity == null) {
                 throw new AuthorizationFailedException("ATHR-001", "User has not signed in");
@@ -29,6 +34,12 @@ public class UserCommonService {
             }
         }
 
+    /**
+     *This method will get the details of the user
+     * @param userId
+     * @return userEntity
+     * @throws UserNotFoundException
+     */
         public UserEntity getUserById(final String userId) throws UserNotFoundException {
             UserEntity userEntity = userDao.getUserById(userId);
             if (userEntity == null) {

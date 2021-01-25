@@ -15,7 +15,11 @@ public class UserAuthDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-
+    /**
+     *This method checks the UserAuthEntity
+     * @param accessToken
+     * @return
+     */
     public UserAuthEntity getUserAuthByToken(final String accessToken) {
         try {
             return entityManager.createNamedQuery("userAccessByToken", UserAuthEntity.class).setParameter("accessToken", accessToken).getSingleResult();
@@ -24,12 +28,21 @@ public class UserAuthDao {
         }
     }
 
+    /**
+     * This method creates AuthToken
+     * @param userAuthEntity
+     * @return userAuthEntity
+     */
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthEntity createAuthToken(final UserAuthEntity userAuthEntity) {
         entityManager.persist(userAuthEntity);
         return userAuthEntity;
     }
 
+    /**
+     *This method will update the userAuthEntity
+     * @param updatedUserAuthEntity
+     */
     public void updateUserAuth(final UserAuthEntity updatedUserAuthEntity) {
         entityManager.merge(updatedUserAuthEntity);
     }
