@@ -16,9 +16,17 @@ import org.springframework.web.bind.annotation.*;
 public class CommonController {
 
     @Autowired
-    UserCommonService commonUserService;
+    private UserCommonService commonUserService;
 
-
+    /**
+     * This endpoint is used to get the details of any user in the Quora Application. This endpoint can be accessed by
+     * any user in the application.
+     * @param accessToken
+     * @param userId
+     * @return ResponseEntity<UserDetailsResponse>
+     * @throws AuthorizationFailedException
+     * @throws UserNotFoundException
+     */
     @RequestMapping(method = RequestMethod.GET, path = "/userprofile/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDetailsResponse> getProfile(@RequestHeader("authorization") final String accessToken, @PathVariable("userId") final String userId) throws AuthorizationFailedException, UserNotFoundException {
         commonUserService.checkIfTokenIsValid(accessToken);

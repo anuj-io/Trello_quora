@@ -27,6 +27,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
     }
 )
 
+/*
+This model class maps to the Users table in DB
+ */
 
 public class UserEntity implements Serializable {
 

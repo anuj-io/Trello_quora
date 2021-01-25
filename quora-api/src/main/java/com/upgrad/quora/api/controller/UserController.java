@@ -48,8 +48,6 @@ public class UserController {
     userEntity.setRole();
     userEntity.setUserName(signupUserRequest.getUserName());
 
-
-
     final UserEntity createdUserEntity = signupBusinessService.signup(userEntity);
     SignupUserResponse signupUserResponse = new SignupUserResponse();
     signupUserResponse.setId(createdUserEntity.getUuid());
@@ -57,6 +55,13 @@ public class UserController {
     return new ResponseEntity<SignupUserResponse>(signupUserResponse, HttpStatus.CREATED);
   }
 
+  /**
+   *This endpoint is used for user authentication. The user authenticates in the application and after successful
+   * authentication, JWT token is given to a user.
+   * @param authorization
+   * @return ResponseEntity<SigninResponse>
+   * @throws AuthenticationFailedException
+   */
   @RequestMapping(method = RequestMethod.POST, path = "/signin", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<SigninResponse> signin(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
 
@@ -76,6 +81,15 @@ public class UserController {
 
     return new ResponseEntity<SigninResponse>(signinResponse, headers, HttpStatus.OK);
   }
+
+  /**
+   *This endpoint is used to sign out from the Quora Application. The user cannot access any other endpoint once he is
+   * signed out of the application.
+   * @param accessToken
+   * @return ResponseEntity<SignoutResponse>
+   * @throws SignOutRestrictedException
+   */
+
   @RequestMapping(method = RequestMethod.POST, path = "/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<SignoutResponse> signout(@RequestHeader("authorization") final String accessToken) throws SignOutRestrictedException {
     UserEntity userEntity = userAuthService.signout(accessToken);

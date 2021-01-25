@@ -18,6 +18,11 @@ import java.time.ZonedDateTime;
         @NamedQuery(name = "getAnswerById", query = "select a from AnswerEntity a where a.uuid=:uuid"),
         @NamedQuery(name = "getAllAnswersToQuestion", query = "select a from AnswerEntity a where a.questionEntity.uuid = :uuid")
 })
+
+/*
+This model class maps to the answer table in DB
+ */
+
 public class AnswerEntity {
     @Id
     @Column(name = "id")
